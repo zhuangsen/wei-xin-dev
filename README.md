@@ -1,1 +1,1 @@
-# weixinauth
+# weixin-dev
