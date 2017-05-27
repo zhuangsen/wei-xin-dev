@@ -18,7 +18,7 @@ public class WeixinTest {
 //			String imagePath = "f:/Resource/image.jpg";
 //			String thumbPaht = "f:/Resource/thumb.jpg";
 //			String voicePath = "f:/Resource/voice.mp3";
-//			String videoPath = "f:/Resource/haha.mp4";
+			String videoPath = "f:/Resource/haha.mp4";
 //			String imageMediaId = WeixinUtil.upload(imagePath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "image");
 //			System.out.println("imageMediaId：");
 //			System.out.println(imageMediaId);
@@ -64,8 +64,8 @@ public class WeixinTest {
 //			}
 			
 			//创建菜单
-			JSONObject jsonObject = WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
-			System.out.println(jsonObject.toString());
+//			JSONObject jsonObject = WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
+//			System.out.println(jsonObject.toString());
 			
 //			JSONObject jsonObject = WeixinUtil.queryMenu(WeixinUtil.ACCESS_TOKEN);
 //			System.out.println(jsonObject.toString());
