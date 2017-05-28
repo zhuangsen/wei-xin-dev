@@ -87,12 +87,10 @@ public class WeixinUtil {
 	public static final String PROJECT_LINK = "http://zhuangsen.tunnel.qydev.com/wei-xin";
 	public static final String RESOURCES_PATH = "/resources/music.mp3";
 
-<<<<<<< HEAD
-=======
+
 	/*********** 微信卡片功能接口 ******************/
 	public static final String ADD_POI = "http://api.weixin.qq.com/cgi-bin/poi/addpoi?access_token=TOKEN";//创建门店接口
 
->>>>>>> branch 'master' of https://github.com/zhuangsen/wei-xin-dev.git
 	/**
 	 * get请求
 	 * 
