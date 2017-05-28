@@ -18,6 +18,7 @@ public class WeixinTest {
 //			String imagePath = "f:/Resource/image.jpg";
 //			String thumbPaht = "f:/Resource/thumb.jpg";
 //			String voicePath = "f:/Resource/voice.mp3";
+<<<<<<< HEAD
 //			String videoPath = "f:/Resource/haha.mp4";
 //			String imageMediaId = WeixinUtil.upload(imagePath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "image");
 //			System.out.println("imageMediaId：");
@@ -66,6 +67,56 @@ public class WeixinTest {
 			//创建菜单
 			JSONObject jsonObject = WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
 			System.out.println(jsonObject.toString());
+=======
+			String videoPath = "f:/Resource/haha.mp4";
+//			String imageMediaId = WeixinUtil.upload(imagePath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "image");
+//			System.out.println("imageMediaId：");
+//			System.out.println(imageMediaId);
+//			String thumbMediaId = WeixinUtil.upload(imagePath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "thumb");
+//			System.out.println("thumbMediaId：");
+//			System.out.println(thumbMediaId);
+//			String voiceMediaId = WeixinUtil.upload(voicePath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "voice");
+//			System.out.println("voiceMediaId："); 
+//			System.out.println(voiceMediaId);
+//			String videoMediaId = WeixinUtil.upload(videoPath,WeixinUtil.UPLOAD_IMG_URL, WeixinUtil.ACCESS_TOKEN, "video");
+//			System.out.println("videoMediaId：");
+//			System.out.println(videoMediaId);
+			
+			//上传永久素材
+			//永久图片素材
+//			String eternalImageMediaId = WeixinUtil.upload(imagePath,WeixinUtil.ADD_MATERIAL_URL, WeixinUtil.ACCESS_TOKEN, "image");
+//			System.out.println("eternalImageMediaId:");
+//			System.out.println(eternalImageMediaId);
+			//永久缩略图素材
+//			String eternalthumbMediaId = WeixinUtil.upload(thumbPaht,WeixinUtil.ADD_MATERIAL_URL, WeixinUtil.ACCESS_TOKEN, "thumb");
+//			System.out.println("eternalthumbMediaId:");
+//			System.out.println(eternalthumbMediaId);
+			//永久语音素材
+//			String eternalVoiceMediaId = WeixinUtil.upload(voicePath,WeixinUtil.ADD_MATERIAL_URL, WeixinUtil.ACCESS_TOKEN, "voice");
+//			System.out.println("eternalVoiceMediaId:");
+//			System.out.println(eternalVoiceMediaId);
+			//永久视频素材
+//			String eternalVideoMediaId = WeixinUtil.upload(videoPath,WeixinUtil.ADD_MATERIAL_URL, WeixinUtil.ACCESS_TOKEN, "video");
+//			System.out.println("eternalVideoMediaId:");
+//			System.out.println(eternalVideoMediaId);
+			//永久图文素材
+//			JSONObject eternalNews = WeixinUtil.uploadArticle(WeixinUtil.ACCESS_TOKEN);
+//			System.out.println("eternalNews:");
+//			System.out.println(eternalNews.toString());
+			
+	
+			
+//			int result = WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
+//			if(result == 0){
+//				System.out.println("创建菜单成功");
+//			}else{
+//				System.out.println("错误码:"+result);
+//			}
+			
+			//创建菜单
+//			JSONObject jsonObject = WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
+//			System.out.println(jsonObject.toString());
+>>>>>>> branch 'master' of https://github.com/zhuangsen/wei-xin-dev.git
 			
 //			JSONObject jsonObject = WeixinUtil.queryMenu(WeixinUtil.ACCESS_TOKEN);
 //			System.out.println(jsonObject.toString());
