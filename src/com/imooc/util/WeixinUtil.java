@@ -14,10 +14,10 @@ import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -31,6 +31,22 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import com.imooc.card.Card;
+import com.imooc.card.CardAbstract;
+import com.imooc.card.CardActionInfo;
+import com.imooc.card.CardAdvancedInfo;
+import com.imooc.card.CardBaseInfo;
+import com.imooc.card.CardCash;
+import com.imooc.card.CardDateTypeFixRange;
+import com.imooc.card.CardGeneralCoupon;
+import com.imooc.card.CardInActionInfo;
+import com.imooc.card.CardQRCode;
+import com.imooc.card.CardSku;
+import com.imooc.card.CardTextImageList;
+import com.imooc.card.CardTimeLimit;
+import com.imooc.card.CardType;
+import com.imooc.card.CardUseCondition;
+import com.imooc.card.Cards;
 import com.imooc.menu.Button;
 import com.imooc.menu.ClickButton;
 import com.imooc.menu.MediaButton;
@@ -40,10 +56,14 @@ import com.imooc.menu.ViewButton;
 import com.imooc.po.AccessToken;
 import com.imooc.po.Article;
 import com.imooc.po.Articles;
+import com.imooc.po.WhiteList;
 import com.imooc.trans.Data;
 import com.imooc.trans.Parts;
 import com.imooc.trans.Symbols;
 import com.imooc.trans.TransResult;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 /**
  * 微信工具类
@@ -56,13 +76,18 @@ public class WeixinUtil {
 	public static final String TEST_APPID = "wx73834ad5aa2dfaa7";
 	public static final String TEST_APPSECRET = "1f6301ee7a66d882e6afeac6fe07237e";
 
-	public static final String ACCESS_TOKEN = "TClVguNxwkv-xuMV1YDeWvXn8NUySx2Bef4wtEHpp3okYgavIxhvt-yeH-wt8WrWEFCQupmx9EtfPfrBLsIVI3-5mT6V-3A80FfFhAHIn-mRhO9m6HFoJah3hubqF57QKHXhAHAOLB";
+	private static final String USER_NAME_MADISON = "ZhuangSen--_--";
+	private static final String USER_NAME_Ivan = "Ivan_Madison";
+
+	public static final String ACCESS_TOKEN = "046ZwevT9imttzkacLVpOaDVd1aLvLo5oZBWv39ekr6x4MIWGFG5uWwuhkNo_mNxXdfkK0KpNdUfMJEpM2MRImqW_B527wWhcxKCWogOri90J4YERSvyJSc6MQhnX6sNDUJgAJAWNC";
 	public static final String IMAGE_MEDIA_ID = "cO8ZMtvh2aaPpLMZnUWRwi0yxsYehf7dKUt6C4aOgWTp1-vgK3f6Bpo-7Qq3QLyN";
 	public static final String THUMB_MEDIA_ID = "mRDvVozWpj-fcrM00MjZnClQsE7Ez6G-YXcprJ4POInrczFCadMBqbfLWjI0y6VK";
 	public static final String VOICE_MEDIA_ID = "3nMtF8o0A9lsZJn9Wke04nj8Tdm6mJOqFExlzLNomYZ_xZ9uN8xLrGVuAT3kuDWI";
 	public static final String VIDEO_MEDIA_ID = "D9ZH8lm5Rp0qEHgISwFcnDozDESbCPlwHn-uO5tiddTo2uImrEK8134EUvIDDkmI";
 
-	public static final String ETERNAL_IMAGE_MEDIA_ID = "hxPHGVxpzKRlb05H0LrfWiXBrxz2t0RvDX7IyBRwj8o";
+	// public static final String ETERNAL_IMAGE_MEDIA_ID =
+	// "hxPHGVxpzKRlb05H0LrfWiXBrxz2t0RvDX7IyBRwj8o";
+	public static final String ETERNAL_IMAGE_MEDIA_ID = "hxPHGVxpzKRlb05H0LrfWtzbUoYYXLjC0m5kfJvmYJo";
 	public static final String ETERNAL_THUMB_MEDIA_ID = "hxPHGVxpzKRlb05H0LrfWo8O5koU2yrIrY0xQoe19CU";
 	public static final String ETERNAL_VOICE_MEDIA_ID = "3nMtF8o0A9lsZJn9Wke04nj8Tdm6mJOqFExlzLNomYZ_xZ9uN8xLrGVuAT3kuDWI";
 	public static final String ETERNAL_VIDEO_MEDIA_ID = "hxPHGVxpzKRlb05H0LrfWhjPzyk2RnaW7uByNrH2yvQ";
@@ -76,6 +101,7 @@ public class WeixinUtil {
 	public static final String ADD_MATERIAL_URL = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=TYPE";
 
 	// 上传图文消息内的图片获取的URL
+	public static final String ETERNAL_IMAGE_URL = "http://mmbiz.qpic.cn/mmbiz_jpg/JNF4MLsWR7dU7FlAv02hsUr2boFZhqpX0bB3dDw0GZDQVKd97QngiaxrwJjrJYgqpxiaIx6w853cUtjDx3K6Qmzg/0";
 	public static final String NEWS_IMAGE_URL = "http://mmbiz.qpic.cn/mmbiz_jpg/JNF4MLsWR7ftHxTB9bSje3EKeVGZ9u0dnsoNURd6ibOXgqUSYWyU1mcTStL93ic4IrAOTTso2NbQVUEboMxFwTbA/0";
 
 	private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
@@ -87,9 +113,20 @@ public class WeixinUtil {
 	public static final String PROJECT_LINK = "http://zhuangsen.tunnel.qydev.com/wei-xin";
 	public static final String RESOURCES_PATH = "/resources/music.mp3";
 
-
 	/*********** 微信卡片功能接口 ******************/
-	public static final String ADD_POI = "http://api.weixin.qq.com/cgi-bin/poi/addpoi?access_token=TOKEN";//创建门店接口
+	public static final String TEST_WHITE_LIST = "https://api.weixin.qq.com/card/testwhitelist/set?access_token=TOKEN";// 設置白名单接口
+	public static final String ADD_POI = "http://api.weixin.qq.com/cgi-bin/poi/addpoi?access_token=TOKEN";// 创建门店接口
+	public static final String CREATE_CARD_URL = "https://api.weixin.qq.com/card/create?access_token=ACCESS_TOKEN";// 創建卡券接口
+	public static final String QRCODE_CARD_URL = "https://api.weixin.qq.com/card/qrcode/create?access_token=TOKEN";// 投放卡券
+
+	private static final String GENERAL_COUPON_CARD_ID = "pY5mJwyLwxameRlI9ckDFGgisaxY";// 优惠券卡券id
+	private static final String GENERAL_COUPON_ADVANCE_INFO_CARD_ID = "pY5mJw38UVov5yK1QDLgFXVGf9fg";// 优惠券高级功能卡券id
+
+	private static final String CASH_CARD_ID = "pY5mJwy8z_2OW3pb96NzhRQsKztE";// 代金券卡券ID
+	private static final String CASH_ADVANCE_INFO_CARD_ID = "pY5mJw8UejvcgQC5mpqvbqsBfsb8";// 代金券高級功能卡券ID
+
+	private static final String CARD_TICKET_URL = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=TICKET";// 通过ticket换取二维码
+	private static final String CARD_TICKET = "gQFq8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySDRBUkJ1enBlOTMxY0ZCR05wNFgAAgQh3ipZAwQIBwAA";// ticket
 
 	/**
 	 * get请求
@@ -139,24 +176,6 @@ public class WeixinUtil {
 	}
 
 	/**
-	 * 获取accessToken
-	 * 
-	 * @return token
-	 * @throws ParseException
-	 * @throws IOException
-	 */
-	public static AccessToken getAccessToken() throws ParseException, IOException {
-		AccessToken token = new AccessToken();
-		String url = ACCESS_TOKEN_URL.replace("APPID", TEST_APPID).replace("APPSECRET", TEST_APPSECRET);
-		JSONObject jsonObject = doGetStr(url);
-		if (jsonObject != null) {
-			token.setToken(jsonObject.getString("access_token"));
-			token.setExpiresIn(jsonObject.getInt("expires_in"));
-		}
-		return token;
-	}
-
-	/**
 	 * 上传素材文件
 	 * 
 	 * @param filePath
@@ -168,7 +187,7 @@ public class WeixinUtil {
 	 * @throws NoSuchProviderException
 	 * @throws KeyManagementException
 	 */
-	public static void upload(String filePath, String uploadUrl, String accessToken, String type)
+	public static void upload(String filePath, String uploadUrl, String type)
 			throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
 
 		File file = new File(filePath);
@@ -176,7 +195,7 @@ public class WeixinUtil {
 			throw new IOException("文件不存在");
 		}
 
-		String url = uploadUrl.replace("ACCESS_TOKEN", accessToken);
+		String url = uploadUrl.replace("ACCESS_TOKEN", ACCESS_TOKEN);
 		if (StringUtils.isNotBlank(type)) {
 			url = url.replace("TYPE", type);
 		}
@@ -273,6 +292,43 @@ public class WeixinUtil {
 		// }
 		// String mediaId = jsonObj.getString(typeName);
 		// return mediaId;
+	}
+
+	/**
+	 * 获取accessToken
+	 * 
+	 * @return token
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public static AccessToken getAccessToken() throws ParseException, IOException {
+		AccessToken token = new AccessToken();
+		String url = ACCESS_TOKEN_URL.replace("APPID", TEST_APPID).replace("APPSECRET", TEST_APPSECRET);
+		JSONObject jsonObject = doGetStr(url);
+		if (jsonObject != null) {
+			token.setToken(jsonObject.getString("access_token"));
+			token.setExpiresIn(jsonObject.getInt("expires_in"));
+		}
+		return token;
+	}
+
+	/**
+	 * 设置白名单
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public static JSONObject setWhiteList() throws ParseException, IOException {
+		String[] strings = new String[] { USER_NAME_MADISON, USER_NAME_Ivan };
+		WhiteList list = new WhiteList();
+		list.setUsername(strings);
+		String whiteList = JSONObject.fromObject(list).toString();
+		System.out.println(whiteList);
+
+		String white_list_url = TEST_WHITE_LIST.replace("TOKEN", ACCESS_TOKEN);
+		JSONObject jsonObject = doPostStr(white_list_url, whiteList);
+		return jsonObject;
 	}
 
 	/**
@@ -387,6 +443,121 @@ public class WeixinUtil {
 		return menu;
 	}
 
+	/**
+	 * 初始化创建卡券post数据
+	 * 
+	 * @return
+	 */
+	private static Cards initCard() {
+		Cards cards = new Cards();
+
+		Card card = new Card();
+		// card.setCard_type("GENERAL_COUPON");// 优惠券
+		card.setCard_type("CASH");// 代金券
+
+		// CardType groupon = new CardGroupon("以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补
+		// 凉锅、酸菜鱼锅可选）： 大锅1份 12元 小锅2份 16元 ");
+		// CardType cardType = new
+		// CardGeneralCoupon("优惠券:以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补凉锅、酸菜鱼锅可选）： 大锅1份
+		// 12元 小锅2份 16元 ");//优惠券
+		CardType cardType = new CardCash(0, 100);// 代金券
+
+		// 必要字段
+		CardBaseInfo baseInfo = new CardBaseInfo();
+		baseInfo.setLogo_url(NEWS_IMAGE_URL);
+		baseInfo.setBrand_name("微信餐厅");
+		baseInfo.setCode_type("CODE_TYPE_QRCODE");
+		baseInfo.setTitle("100代金券!");
+		// baseInfo.setColor("Color080");
+		baseInfo.setColor("Color010");
+		baseInfo.setNotice("使用时向服务员出示此券");
+		baseInfo.setDescription("不可与其他优惠同享，店内均可使用！");
+
+		CardDateTypeFixRange dateInfo = new CardDateTypeFixRange();
+		dateInfo.setType("DATE_TYPE_FIX_TIME_RANGE");
+		Calendar date = Calendar.getInstance();
+		dateInfo.setBegin_timestamp(date.getTimeInMillis() / 1000);
+		date.add(Calendar.DAY_OF_MONTH, 30);
+		date.set(Calendar.HOUR_OF_DAY, 23);
+		date.set(Calendar.MINUTE, 59);
+		date.set(Calendar.SECOND, 59);
+		dateInfo.setEnd_timestamp(date.getTimeInMillis() / 1000);
+		baseInfo.setDate_info(dateInfo);
+		baseInfo.setUse_limit(50);
+		baseInfo.setGet_limit(50);
+		baseInfo.setService_phone("17612168170");
+		baseInfo.setCan_share(true);
+		baseInfo.setCan_give_friend(true);
+
+		CardSku sku = new CardSku();
+		sku.setQuantity(10);
+		baseInfo.setSku(sku);
+
+		// 非必要字段
+		baseInfo.setCenter_url("逗你玩~");
+		baseInfo.setCenter_title("满110元可用");
+		baseInfo.setCenter_sub_title("满100元可用");
+		//
+		// baseInfo.setCustom_url_name("更多优惠等你来~");
+		// baseInfo.setCustom_url("www.baidu.com");
+		// baseInfo.setCenter_title("优惠多多哟~");
+
+		// advanced_info
+		CardAdvancedInfo advancedInfo = new CardAdvancedInfo();
+		CardUseCondition useCondition = new CardUseCondition();
+		useCondition.setAccept_category("鞋类");
+		useCondition.setReject_category("阿迪达斯");
+		useCondition.setCan_use_with_other_discount(true);
+		advancedInfo.setUse_condition(useCondition);
+		CardAbstract cardAbstract = new CardAbstract();
+		cardAbstract.setCard_abstract("微信餐厅推出多种新季菜品，期待您的光临");
+		cardAbstract.setIcon_url_list(new String[] { ETERNAL_IMAGE_URL });
+		advancedInfo.setCard_abstract(cardAbstract);
+		CardTextImageList cardTextImageList = new CardTextImageList();
+		cardTextImageList.setText("此菜品精选食材，以独特的烹饪方法，最大程度地刺激食 客的味蕾");
+		cardTextImageList.setImage_url(ETERNAL_IMAGE_URL);
+		advancedInfo.setText_image_list(new CardTextImageList[] { cardTextImageList });
+		CardTimeLimit cardTimeLimit = new CardTimeLimit();
+		cardTimeLimit.setType("MONDAY");
+		cardTimeLimit.setBegin_hour(0);
+		cardTimeLimit.setEnd_hour(10);
+		cardTimeLimit.setBegin_minute(10);
+		cardTimeLimit.setEnd_minute(59);
+		advancedInfo.setTime_limit(new CardTimeLimit[] { cardTimeLimit });
+		advancedInfo.setBusiness_service(new String[] { "BIZ_SERVICE_FREE_PARK", "BIZ_SERVICE_DELIVER",
+				"BIZ_SERVICE_WITH_PET", "BIZ_SERVICE_FREE_WIFI" });
+
+		cardType.setAdvanced_info(advancedInfo);
+		cardType.setBase_info(baseInfo);
+
+		// card.setGroupon(cardType);
+		// card.setGeneral_coupon(cardType);
+		card.setCash(cardType);
+
+		cards.setCard(card);
+		return cards;
+	}
+
+	/**
+	 * 初始化投放卡券post數據
+	 * 
+	 * @return
+	 */
+	private static CardQRCode initQRCodeCard() {
+		CardQRCode cardQRCode = new CardQRCode();
+		cardQRCode.setAction_name("QR_CARD");
+		cardQRCode.setExpire_seconds(1800);
+
+		CardActionInfo actionInfo = new CardActionInfo();
+		CardInActionInfo inActionInfo = new CardInActionInfo();
+		inActionInfo.setCard_id(CASH_ADVANCE_INFO_CARD_ID);
+		actionInfo.setCard(inActionInfo);
+
+		cardQRCode.setAction_info(actionInfo);
+
+		return cardQRCode;
+	}
+
 	public static JSONObject createMenu(String token) throws ParseException, IOException {
 		String menu = JSONObject.fromObject(initMyMenu()).toString();
 		System.out.println(menu);
@@ -442,6 +613,14 @@ public class WeixinUtil {
 		return articles;
 	}
 
+	/**
+	 * 上传图文消息
+	 * 
+	 * @param token
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public static JSONObject uploadArticle(String token) throws ParseException, IOException {
 		String articles = JSONObject.fromObject(initArcticle()).toString();
 		System.out.println("articles：" + articles);
@@ -495,4 +674,43 @@ public class WeixinUtil {
 		}
 		return dst.toString();
 	}
+
+	/**
+	 * 创建卡券
+	 * 
+	 * @param token
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public static JSONObject createCard() throws ParseException, IOException {
+		JsonConfig jsonConfig = new JsonConfig();
+		// jsonConfig.setExcludes(new String[] { "advanced_info" });
+
+		JSONObject jsonObject = JSONObject.fromObject(initCard(), jsonConfig);
+		String json = jsonObject.toString().replace("card_abstract", "abstract");
+		System.out.println(json);
+		String createCradUrl = CREATE_CARD_URL.replace("ACCESS_TOKEN", ACCESS_TOKEN);
+		JSONObject cardJSONObject = doPostStr(createCradUrl, json);
+		return cardJSONObject;
+	}
+
+	/**
+	 * 發送卡券投放请求
+	 * 
+	 * @param token
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public static JSONObject qrcodeCard(String token) throws ParseException, IOException {
+		JSONObject jsonObject = JSONObject.fromObject(initQRCodeCard());
+		String json = jsonObject.toString();
+		System.out.println(json);
+
+		String qrcodeUrl = QRCODE_CARD_URL.replace("TOKEN", token);
+		JSONObject qrcodeCard = doPostStr(qrcodeUrl, json);
+		return qrcodeCard;
+	}
+
 }

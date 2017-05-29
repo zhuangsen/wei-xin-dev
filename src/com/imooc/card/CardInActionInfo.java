@@ -1,0 +1,61 @@
+package com.imooc.card;
+
+public class CardInActionInfo {
+
+	private String card_id;// 卡券ID。
+	private String code;// 卡券Code码,use_custom_code字段为true的卡券必须填写，非自定义code和导入code模式的卡券不必填写。
+	private String openid;// 指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，非指定openid不必填写。
+	private boolean is_unique_code;// 指定下发二维码，生成的二维码随机分配一个code，领取后不可再次扫描。填写true或false。默认false，注意填写该字段时，卡券须通过审核且库存不为0。
+	private long outer_id;// 领取场景值，用于领取渠道的数据统计，默认值为0，字段类型为整型，长度限制为60位数字。用户领取卡券后触发的事件推送中会带上此自定义场景值。
+	private String outer_str;// outer_id字段升级版本，字符串类型，用户首次领卡时，会通过领取事件推送给商户；对于会员卡的二维码，用户每次扫码打开会员卡后点击任何url，会将该值拼入url中，方便开发者定位扫码来源
+
+	public String getCard_id() {
+		return card_id;
+	}
+
+	public void setCard_id(String card_id) {
+		this.card_id = card_id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+
+
+	public String getOuter_str() {
+		return outer_str;
+	}
+
+	public void setOuter_str(String outer_str) {
+		this.outer_str = outer_str;
+	}
+
+	public long getOuter_id() {
+		return outer_id;
+	}
+
+	public void setOuter_id(long outer_id) {
+		this.outer_id = outer_id;
+	}
+
+	public boolean isIs_unique_code() {
+		return is_unique_code;
+	}
+
+	public void setIs_unique_code(boolean is_unique_code) {
+		this.is_unique_code = is_unique_code;
+	}
+
+}
