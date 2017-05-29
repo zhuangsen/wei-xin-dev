@@ -14,7 +14,6 @@ import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +35,8 @@ import com.imooc.card.CardAbstract;
 import com.imooc.card.CardActionInfo;
 import com.imooc.card.CardAdvancedInfo;
 import com.imooc.card.CardBaseInfo;
-import com.imooc.card.CardCash;
 import com.imooc.card.CardDateTypeFixRange;
-import com.imooc.card.CardGeneralCoupon;
+import com.imooc.card.CardGift;
 import com.imooc.card.CardInActionInfo;
 import com.imooc.card.CardQRCode;
 import com.imooc.card.CardSku;
@@ -77,9 +75,16 @@ public class WeixinUtil {
 	public static final String TEST_APPSECRET = "1f6301ee7a66d882e6afeac6fe07237e";
 
 	private static final String USER_NAME_MADISON = "ZhuangSen--_--";
-	private static final String USER_NAME_Ivan = "Ivan_Madison";
+	private static final String USER_NAME_IVAN = "Ivan_Madison";
+	private static final String USER_NAME_BAO = "x861281331";
+	private static final String USER_NAME_CHANG = "changlock";
+	private static final String USER_NAME_DONG = "xiangyangdongdong";
+	private static final String USER_NAME_LIANG = "wxid_bd1nu4e9q8b912";
+	private static final String USER_NAME_CHEN = "cc815211727";
+	private static final String USER_NAME_TINA = "yl459668064";
 
-	public static final String ACCESS_TOKEN = "046ZwevT9imttzkacLVpOaDVd1aLvLo5oZBWv39ekr6x4MIWGFG5uWwuhkNo_mNxXdfkK0KpNdUfMJEpM2MRImqW_B527wWhcxKCWogOri90J4YERSvyJSc6MQhnX6sNDUJgAJAWNC";
+	public static final String ACCESS_TOKEN = "4G4kPSanOFc-s-zi0OHgZGYGN9KxDWTv49JgEkB7OPBBeoRfWeeF6JgxfhGapanQaw7lA-vK8-2Avc3YWrI4Z1C8a8ys1fCuLmF4XDe21dFYv1MDI744CCawWI9fr3Y9XUFdAJADAL";
+
 	public static final String IMAGE_MEDIA_ID = "cO8ZMtvh2aaPpLMZnUWRwi0yxsYehf7dKUt6C4aOgWTp1-vgK3f6Bpo-7Qq3QLyN";
 	public static final String THUMB_MEDIA_ID = "mRDvVozWpj-fcrM00MjZnClQsE7Ez6G-YXcprJ4POInrczFCadMBqbfLWjI0y6VK";
 	public static final String VOICE_MEDIA_ID = "3nMtF8o0A9lsZJn9Wke04nj8Tdm6mJOqFExlzLNomYZ_xZ9uN8xLrGVuAT3kuDWI";
@@ -103,6 +108,7 @@ public class WeixinUtil {
 	// 上传图文消息内的图片获取的URL
 	public static final String ETERNAL_IMAGE_URL = "http://mmbiz.qpic.cn/mmbiz_jpg/JNF4MLsWR7dU7FlAv02hsUr2boFZhqpX0bB3dDw0GZDQVKd97QngiaxrwJjrJYgqpxiaIx6w853cUtjDx3K6Qmzg/0";
 	public static final String NEWS_IMAGE_URL = "http://mmbiz.qpic.cn/mmbiz_jpg/JNF4MLsWR7ftHxTB9bSje3EKeVGZ9u0dnsoNURd6ibOXgqUSYWyU1mcTStL93ic4IrAOTTso2NbQVUEboMxFwTbA/0";
+	public static final String ETERNAL_IMAGE_XIANGLIAN_URL = "http://mmbiz.qpic.cn/mmbiz_jpg/JNF4MLsWR7fRMESGIribicICFNW3YMhs0dvMEtmlKxXzaRAkWbMToKWMsCI7zbvL5GvVedjezINyaWlriaOJjicj1A/0?wx_fmt=jpeg";
 
 	private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
@@ -123,7 +129,11 @@ public class WeixinUtil {
 	private static final String GENERAL_COUPON_ADVANCE_INFO_CARD_ID = "pY5mJw38UVov5yK1QDLgFXVGf9fg";// 优惠券高级功能卡券id
 
 	private static final String CASH_CARD_ID = "pY5mJwy8z_2OW3pb96NzhRQsKztE";// 代金券卡券ID
-	private static final String CASH_ADVANCE_INFO_CARD_ID = "pY5mJw8UejvcgQC5mpqvbqsBfsb8";// 代金券高級功能卡券ID
+	private static final String CASH_ADVANCE_INFO_CARD_ID = "pY5mJwwwbPptfHRIDn_5ygZ3-Kts";// 代金券高級功能卡券ID
+
+	private static final String GIFT_CARD_ID = "pY5mJw6oUMu2JKOT75DCMEW_3WJQ";// 兑换券卡券ID
+
+	private static final String MEMBER_CARD_ID = "pY5mJw4FBaUg05VorZGPFtuMUa5A";
 
 	private static final String CARD_TICKET_URL = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=TICKET";// 通过ticket换取二维码
 	private static final String CARD_TICKET = "gQFq8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySDRBUkJ1enBlOTMxY0ZCR05wNFgAAgQh3ipZAwQIBwAA";// ticket
@@ -320,7 +330,8 @@ public class WeixinUtil {
 	 * @throws IOException
 	 */
 	public static JSONObject setWhiteList() throws ParseException, IOException {
-		String[] strings = new String[] { USER_NAME_MADISON, USER_NAME_Ivan };
+		String[] strings = new String[] { USER_NAME_MADISON, USER_NAME_IVAN, USER_NAME_BAO, USER_NAME_CHANG,
+				USER_NAME_DONG, USER_NAME_LIANG, USER_NAME_CHEN, USER_NAME_TINA };
 		WhiteList list = new WhiteList();
 		list.setUsername(strings);
 		String whiteList = JSONObject.fromObject(list).toString();
@@ -413,11 +424,11 @@ public class WeixinUtil {
 		MediaButton tupian = new MediaButton();
 		tupian.setName("图片");
 		tupian.setType("media_id");
-		tupian.setMedia_id(ETERNAL_IMAGE_MEDIA_ID);
+		tupian.setMedia_id(ETERNAL_VIDEO_MEDIA_ID);
 		MediaButton tuwen = new MediaButton();
 		tuwen.setName("图文消息");
 		tuwen.setType("media_id");
-		tuwen.setMedia_id(ETERNAL_NEWS_MEDIA_ID);
+		tuwen.setMedia_id(ETERNAL_VIDEO_MEDIA_ID);
 		ClickButton location = new ClickButton();
 		location.setName("发送位置");
 		location.setType("location_select");
@@ -452,26 +463,29 @@ public class WeixinUtil {
 		Cards cards = new Cards();
 
 		Card card = new Card();
-		// card.setCard_type("GENERAL_COUPON");// 优惠券
+
+		card.setCard_type("GENERAL_COUPON");// 优惠券
 		card.setCard_type("CASH");// 代金券
+		card.setCard_type("GIFT");// 兑换券
 
 		// CardType groupon = new CardGroupon("以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补
 		// 凉锅、酸菜鱼锅可选）： 大锅1份 12元 小锅2份 16元 ");
 		// CardType cardType = new
 		// CardGeneralCoupon("优惠券:以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补凉锅、酸菜鱼锅可选）： 大锅1份
 		// 12元 小锅2份 16元 ");//优惠券
-		CardType cardType = new CardCash(0, 100);// 代金券
+		// CardType cardType = new CardCash(0, 100);// 代金券
+		CardType cardType = new CardGift("可兑换项链一条");
 
 		// 必要字段
 		CardBaseInfo baseInfo = new CardBaseInfo();
-		baseInfo.setLogo_url(NEWS_IMAGE_URL);
-		baseInfo.setBrand_name("微信餐厅");
+		baseInfo.setLogo_url(ETERNAL_IMAGE_XIANGLIAN_URL);
+		baseInfo.setBrand_name("FORMYROSE");
 		baseInfo.setCode_type("CODE_TYPE_QRCODE");
-		baseInfo.setTitle("100代金券!");
+		baseInfo.setTitle("520元兑换券!");
 		// baseInfo.setColor("Color080");
-		baseInfo.setColor("Color010");
+		baseInfo.setColor("Color100");
 		baseInfo.setNotice("使用时向服务员出示此券");
-		baseInfo.setDescription("不可与其他优惠同享，店内均可使用！");
+		baseInfo.setDescription("店内均可使用，提前祝您端午节快乐！");
 
 		CardDateTypeFixRange dateInfo = new CardDateTypeFixRange();
 		dateInfo.setType("DATE_TYPE_FIX_TIME_RANGE");
@@ -494,9 +508,9 @@ public class WeixinUtil {
 		baseInfo.setSku(sku);
 
 		// 非必要字段
-		baseInfo.setCenter_url("逗你玩~");
-		baseInfo.setCenter_title("满110元可用");
-		baseInfo.setCenter_sub_title("满100元可用");
+		// baseInfo.setCenter_url("www.baidu.com");
+		// baseInfo.setCenter_title("满110元可用");
+		// baseInfo.setCenter_sub_title("满100元可用");
 		//
 		// baseInfo.setCustom_url_name("更多优惠等你来~");
 		// baseInfo.setCustom_url("www.baidu.com");
@@ -505,34 +519,36 @@ public class WeixinUtil {
 		// advanced_info
 		CardAdvancedInfo advancedInfo = new CardAdvancedInfo();
 		CardUseCondition useCondition = new CardUseCondition();
-		useCondition.setAccept_category("鞋类");
-		useCondition.setReject_category("阿迪达斯");
+		useCondition.setAccept_category("蒂凡尼、卡地亚、宝格丽等品牌");
+		// useCondition.setReject_category("阿迪达斯");
 		useCondition.setCan_use_with_other_discount(true);
 		advancedInfo.setUse_condition(useCondition);
 		CardAbstract cardAbstract = new CardAbstract();
-		cardAbstract.setCard_abstract("微信餐厅推出多种新季菜品，期待您的光临");
-		cardAbstract.setIcon_url_list(new String[] { ETERNAL_IMAGE_URL });
+		cardAbstract.setCard_abstract("一生只为一人定制");
+		cardAbstract.setIcon_url_list(new String[] { ETERNAL_IMAGE_URL, ETERNAL_IMAGE_XIANGLIAN_URL });
 		advancedInfo.setCard_abstract(cardAbstract);
 		CardTextImageList cardTextImageList = new CardTextImageList();
-		cardTextImageList.setText("此菜品精选食材，以独特的烹饪方法，最大程度地刺激食 客的味蕾");
-		cardTextImageList.setImage_url(ETERNAL_IMAGE_URL);
+		cardTextImageList.setText("FORMYROSE真爱项链,秉承一生只为一人定制的创始理念.以非凡品质,融合情感与时尚设计,创作出FORMYROSE独特风格");
+		cardTextImageList.setImage_url(ETERNAL_IMAGE_XIANGLIAN_URL);
 		advancedInfo.setText_image_list(new CardTextImageList[] { cardTextImageList });
 		CardTimeLimit cardTimeLimit = new CardTimeLimit();
 		cardTimeLimit.setType("MONDAY");
-		cardTimeLimit.setBegin_hour(0);
-		cardTimeLimit.setEnd_hour(10);
-		cardTimeLimit.setBegin_minute(10);
-		cardTimeLimit.setEnd_minute(59);
+		cardTimeLimit.setBegin_hour(8);
+		cardTimeLimit.setEnd_hour(22);
+		cardTimeLimit.setBegin_minute(0);
+		cardTimeLimit.setEnd_minute(0);
 		advancedInfo.setTime_limit(new CardTimeLimit[] { cardTimeLimit });
 		advancedInfo.setBusiness_service(new String[] { "BIZ_SERVICE_FREE_PARK", "BIZ_SERVICE_DELIVER",
 				"BIZ_SERVICE_WITH_PET", "BIZ_SERVICE_FREE_WIFI" });
+		advancedInfo.setBusiness_service(new String[] {});
 
 		cardType.setAdvanced_info(advancedInfo);
 		cardType.setBase_info(baseInfo);
 
 		// card.setGroupon(cardType);
 		// card.setGeneral_coupon(cardType);
-		card.setCash(cardType);
+		// card.setCash(cardType);
+		card.setGift(cardType);
 
 		cards.setCard(card);
 		return cards;
@@ -550,7 +566,7 @@ public class WeixinUtil {
 
 		CardActionInfo actionInfo = new CardActionInfo();
 		CardInActionInfo inActionInfo = new CardInActionInfo();
-		inActionInfo.setCard_id(CASH_ADVANCE_INFO_CARD_ID);
+		inActionInfo.setCard_id(MEMBER_CARD_ID);
 		actionInfo.setCard(inActionInfo);
 
 		cardQRCode.setAction_info(actionInfo);
@@ -558,12 +574,12 @@ public class WeixinUtil {
 		return cardQRCode;
 	}
 
-	public static JSONObject createMenu(String token) throws ParseException, IOException {
+	public static JSONObject createMenu() throws ParseException, IOException {
 		String menu = JSONObject.fromObject(initMyMenu()).toString();
 		System.out.println(menu);
 
 		// int result = 0;
-		String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
+		String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", ACCESS_TOKEN);
 		JSONObject jsonObject = doPostStr(url, menu);
 		// if (jsonObject != null) {
 		// result = jsonObject.getInt("errcode");
@@ -703,12 +719,12 @@ public class WeixinUtil {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public static JSONObject qrcodeCard(String token) throws ParseException, IOException {
+	public static JSONObject qrcodeCard() throws ParseException, IOException {
 		JSONObject jsonObject = JSONObject.fromObject(initQRCodeCard());
 		String json = jsonObject.toString();
 		System.out.println(json);
 
-		String qrcodeUrl = QRCODE_CARD_URL.replace("TOKEN", token);
+		String qrcodeUrl = QRCODE_CARD_URL.replace("TOKEN", ACCESS_TOKEN);
 		JSONObject qrcodeCard = doPostStr(qrcodeUrl, json);
 		return qrcodeCard;
 	}

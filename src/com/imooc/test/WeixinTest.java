@@ -11,9 +11,10 @@ public class WeixinTest {
 			// AccessToken token = WeixinUtil.getAccessToken();
 			// System.out.println("票据:");
 			// System.out.println(token.getToken());
-			// System.out.println("有效时间:"+token.getExpiresIn());
 
-			String imagePath = "f:/Resource/image.jpg";
+			// System.out.println("有效时间:" + token.getExpiresIn());
+
+			// String imagePath = "/home/madison/Documents/image.jpg";
 			// String thumbPaht = "f:/Resource/thumb.jpg";
 			// String voicePath = "f:/Resource/voice.mp3";
 			// String videoPath = "f:/Resource/haha.mp4";
@@ -130,9 +131,8 @@ public class WeixinTest {
 			// }
 
 			// 创建菜单
-			// JSONObject jsonObject =
-			// WeixinUtil.createMenu(WeixinUtil.ACCESS_TOKEN);
-			// System.out.println(jsonObject.toString());
+//			JSONObject jsonObject = WeixinUtil.createMenu();
+//			System.out.println(jsonObject.toString());
 
 			// JSONObject jsonObject =
 			// WeixinUtil.queryMenu(WeixinUtil.ACCESS_TOKEN);
@@ -157,12 +157,11 @@ public class WeixinTest {
 			// System.out.println(jsonObject.toString());
 
 			// 创建卡券
-			JSONObject jsonObject = WeixinUtil.createCard();
-			System.out.println(jsonObject.toString());
-			// 投放卡券
-			// JSONObject jsonObject =
-			// WeixinUtil.qrcodeCard(WeixinUtil.ACCESS_TOKEN);
+			// JSONObject jsonObject = WeixinUtil.createCard();
 			// System.out.println(jsonObject.toString());
+			// 投放卡券
+			JSONObject jsonObject = WeixinUtil.qrcodeCard();
+			System.out.println(jsonObject.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
