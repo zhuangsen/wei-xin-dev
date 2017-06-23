@@ -470,6 +470,8 @@ public class WeixinUtil {
 		card.setCard_type("GENERAL_COUPON");// 优惠券
 		card.setCard_type("CASH");// 代金券
 		card.setCard_type("GIFT");// 兑换券
+		//团购券
+		//折扣券
 
 		// CardType groupon = new CardGroupon("以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补
 		// 凉锅、酸菜鱼锅可选）： 大锅1份 12元 小锅2份 16元 ");

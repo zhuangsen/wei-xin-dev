@@ -156,12 +156,12 @@ public class WeixinTest {
 			// JSONObject jsonObject = WeixinUtil.setWhiteList();
 			// System.out.println(jsonObject.toString());
 
-			// 创建卡券
-			// JSONObject jsonObject = WeixinUtil.createCard();
-			// System.out.println(jsonObject.toString());
-			// 投放卡券
-//			JSONObject jsonObject = WeixinUtil.qrcodeCard();
-//			System.out.println(jsonObject.toString());
+//			 创建卡券
+//			 JSONObject jsonObject = WeixinUtil.createCard();
+//			 System.out.println(jsonObject.toString());
+//			 投放卡券
+			JSONObject jsonObject = WeixinUtil.qrcodeCard();
+			System.out.println(jsonObject.toString());
 			
 			
 //			JSONObject jsonObject = WeixinUtil.SendKFNewsMsg_south711();
