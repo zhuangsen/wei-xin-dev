@@ -15,6 +15,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,8 @@ import net.sf.json.JsonConfig;
 public class WeixinUtil {
 	public static final String APPID = "wx556e5b2e4d4b827a";
 	public static final String APPSECRET = "dd8ee32598397b58b0f34881c3bc7079";
+	
+	public static final String MADISON_OPENID = "oY5mJw5d7G78pHVkXrwXJVHkDr_Y";
 
 	public static final String TEST_APPID = "wx73834ad5aa2dfaa7";
 	public static final String TEST_APPSECRET = "1f6301ee7a66d882e6afeac6fe07237e";
@@ -83,7 +86,7 @@ public class WeixinUtil {
 	private static final String USER_NAME_CHEN = "cc815211727";
 	private static final String USER_NAME_TINA = "yl459668064";
 
-	public static final String ACCESS_TOKEN = "4G4kPSanOFc-s-zi0OHgZGYGN9KxDWTv49JgEkB7OPBBeoRfWeeF6JgxfhGapanQaw7lA-vK8-2Avc3YWrI4Z1C8a8ys1fCuLmF4XDe21dFYv1MDI744CCawWI9fr3Y9XUFdAJADAL";
+	public static final String ACCESS_TOKEN = "bWHfdwp-HXu93LXU5z0HpOkt_dBUYk8VKx2WxPWSGssQmuyUDL7xIC1uQRB4oBaz4ebBqv0UkO-rD8_IHd8ejW7-KmJBtB6P7F06KqCtGvTgtGE3mDd27mi-CwcURkgcXKGiADAHUQ";
 
 	public static final String IMAGE_MEDIA_ID = "cO8ZMtvh2aaPpLMZnUWRwi0yxsYehf7dKUt6C4aOgWTp1-vgK3f6Bpo-7Qq3QLyN";
 	public static final String THUMB_MEDIA_ID = "mRDvVozWpj-fcrM00MjZnClQsE7Ez6G-YXcprJ4POInrczFCadMBqbfLWjI0y6VK";
@@ -727,6 +730,39 @@ public class WeixinUtil {
 		String qrcodeUrl = QRCODE_CARD_URL.replace("TOKEN", ACCESS_TOKEN);
 		JSONObject qrcodeCard = doPostStr(qrcodeUrl, json);
 		return qrcodeCard;
+	}
+
+	public static JSONObject SendKFNewsMsg_south711() throws ParseException, IOException {
+		// String strOpenID = "oGT8Zt-oModKeE9w9fyFNNFRVgu0"; //Tei
+		// String strOpenID = "oMSB6uDFJHOy4tl6jZDolrROiBtk"; //Joyce
+		// String strOpenID = "oMSB6uL53O-EXzYAi5A-DA76fP9o"; //Joyce
+		// String strOpenID = "oGT8Zt1tc2GGK4Ll0PhguxROMQQI"; //Eric
+		// String strOpenID = "oGT8Zt67_jP3vCCnICPGW144bo1o"; //pino
+		// String strOpenID = "oGT8Zt9hPamfATXMUJQl0PryeMc8"; //pino
+		// String strOpenID = "oMSB6uMp-PTKdFrZoRmNyX4-AWNg"; //danny
+		String strOpenID = "oGT8Ztz5hJK42rcQwhg8xijBDqLE"; // danny
+//		String strWXToken = "nd-DpBo2KClp0YWrccXPCtPp_9mDdwqHf0-4q7gOqkomzeraZaGuz_jTbbOkLrXePrZQKHwi4TCuWSftKUZky5p4weRv8bOSSzD82QBk7RksegONvrMiYq-2IHNfMEN_MHIdAEAPKL";
+		String strTitle = "支付确认";
+		String strAds = "“二零一七”春来惠至[广告]";
+		String strContent = "付款金额：15.00 元\r\n商品名称：微信支付\r\n商户名称：卡购商城南京西路店\r\n交易订单：4005282001201704143563642788\r\n交易时间：2017-05-11 17:50:12\r\n\r\n"
+				+ strAds;
+		// String strURL = "https://www.beijing-hyundai.com.cn";
+		// String strPicURL =
+		// "https://www.beijing-hyundai.com.cn/Uploads/thumb/470_218/Uploads_image_20170303_20170303090155_58438.jpg";
+		String strPicURL = "https://qa1-eng.kargotest.com/CHolder/control/ad_open?kcid=000530445814&turl=aHR0cHM6Ly9xYTEtZW5nLmthcmdvdGVzdC5jb20vQ0hvbGRlci9yZXNvdXJjZXMvaW1nL2R1bW15X2ltZzMuanBn&time="
+				+ new Date().getTime();
+		String strURL = "https://qa1-eng.kargotest.com/CHolder/control/ad_click?kcid=000530445814&turl=aHR0cDovL3d3dy5rYXJnb2NhcmQuY29tLw==&time="
+				+ new Date().getTime();
+
+		String strMsg = "{\"touser\":\"" + strOpenID + "\",\"msgtype\":\"news\",\"news\":{\"articles\": [{\"title\":\""
+				+ strTitle + "\",\"description\":\"" + strContent + "\",\"url\":\"" + strURL + "\",\"picurl\":\""
+				+ strPicURL + "\"}]}}";
+
+//		strWXToken = "6gcHEDFbr3LOqMZssDeLrmqlXj6iFyokQsiIfja-lkAgCCfc1b_FXXrO9RIC6oMOyzYMNPAk8J3rmy16YhiaWVcan2Bdoxhy7l2q4SW7hI7VQCrVWeU3xUvxg99-Zq5BJOMbABAUZX";
+		strMsg = "{\"touser\":\"oY5mJw5d7G78pHVkXrwXJVHkDr_Y\",\"msgtype\":\"news\",\"news\":{\"articles\":[{\"title\":\"支付确认\",\"description\":\"付款金额：0.01 元\\n商品名称：微信支付\\n商户名称：jiasiduo 测试商户\\n交易订单：4000822001201706074680844774\\n交易时间：2017-06-07 13:29:44\\n\\n“二零一七”春来惠至[广告]\",\"url\":\"www.baidu.com\",\"picurl\":\"http://qa1-eng.kargotest.com:81/CHolder/control/ad_open?kcid=000530459612&turl=aHR0cDovL3Rlc3Quc2Fhc2JwLnN0b3JtYWQuY24vZGlzdC91cGxvYWQvYWQvMjAxNzA2MDYvMTU5MzZhMjBmMjcwYzguanBn&time=1496813386381\"}]}}";
+
+		return doPostStr("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN,
+					strMsg);
 	}
 
 }

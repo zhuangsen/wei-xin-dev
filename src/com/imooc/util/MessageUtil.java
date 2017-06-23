@@ -32,7 +32,7 @@ import com.thoughtworks.xstream.XStream;
 /**
  * 消息封装类
  * 
- * @author Stephen
+ * @author madison
  *
  */
 public class MessageUtil {
@@ -160,7 +160,7 @@ public class MessageUtil {
 	 */
 	public static String initImageMessage(String toUserName, String fromUserName) {
 		Image image = new Image();
-		image.setMediaId(WeixinUtil.IMAGE_MEDIA_ID);
+		image.setMediaId(WeixinUtil.ETERNAL_IMAGE_MEDIA_ID);
 		ImageMessage imageMessage = new ImageMessage();
 		imageMessage.setFromUserName(toUserName);
 		imageMessage.setToUserName(fromUserName);
@@ -181,7 +181,7 @@ public class MessageUtil {
 	 */
 	public static String initVoiceMessage(String toUserName, String fromUserName) {
 		Voice voice = new Voice();
-		voice.setMediaId(WeixinUtil.VOICE_MEDIA_ID);
+		voice.setMediaId(WeixinUtil.ETERNAL_VOICE_MEDIA_ID);
 		VoiceMessage voiceMessage = new VoiceMessage();
 		voiceMessage.setFromUserName(toUserName);
 		voiceMessage.setToUserName(fromUserName);
@@ -201,7 +201,7 @@ public class MessageUtil {
 	 */
 	public static String initVideoMessage(String toUserName, String fromUserName) {
 		Video video = new Video();
-		video.setMediaId(WeixinUtil.VIDEO_MEDIA_ID);
+		video.setMediaId(WeixinUtil.ETERNAL_VIDEO_MEDIA_ID);
 		VideoMessage videoMessage = new VideoMessage();
 		videoMessage.setFromUserName(toUserName);
 		videoMessage.setToUserName(fromUserName);

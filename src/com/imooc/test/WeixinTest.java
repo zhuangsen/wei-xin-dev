@@ -8,11 +8,11 @@ import net.sf.json.JSONObject;
 public class WeixinTest {
 	public static void main(String[] args) {
 		try {
-			// AccessToken token = WeixinUtil.getAccessToken();
-			// System.out.println("票据:");
-			// System.out.println(token.getToken());
-
-			// System.out.println("有效时间:" + token.getExpiresIn());
+//			 AccessToken token = WeixinUtil.getAccessToken();
+//			 System.out.println("票据:");
+//			 System.out.println(token.getToken());
+//
+//			 System.out.println("有效时间:" + token.getExpiresIn());
 
 			// String imagePath = "/home/madison/Documents/image.jpg";
 			// String thumbPaht = "f:/Resource/thumb.jpg";
@@ -160,8 +160,12 @@ public class WeixinTest {
 			// JSONObject jsonObject = WeixinUtil.createCard();
 			// System.out.println(jsonObject.toString());
 			// 投放卡券
-			JSONObject jsonObject = WeixinUtil.qrcodeCard();
-			System.out.println(jsonObject.toString());
+//			JSONObject jsonObject = WeixinUtil.qrcodeCard();
+//			System.out.println(jsonObject.toString());
+			
+			
+//			JSONObject jsonObject = WeixinUtil.SendKFNewsMsg_south711();
+//			System.out.println(jsonObject.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
